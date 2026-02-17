@@ -369,12 +369,12 @@ function PlayPongApp({ onBack, startView = "home" }) {
       <style>{`* { box-sizing:border-box; margin:0; padding:0; } input:focus{outline:none;border-color:${t.accent}!important} button{cursor:pointer} ::-webkit-scrollbar{display:none}`}</style>
       {notif && <div style={{ position:"fixed",top:12,left:"50%",transform:"translateX(-50%)",padding:"10px 24px",borderRadius:R,background:t.accent,color:"#fff",fontWeight:600,fontSize:13,zIndex:999 }}>{notif}</div>}
       <header style={{ display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 18px",borderBottom:`1px solid ${t.border}`,background:t.barBg,position:"sticky",top:0,zIndex:50 }}>
-        {view!=="home"?<button style={{background:"none",border:"none",padding:4}} onClick={()=>nav("home")}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.sub} strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>:<button style={{background:"none",border:"none",color:t.sub,fontSize:12,cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={onBack}>← Sitio</button>}
+        <button style={{background:"none",border:"none",padding:4}} onClick={()=>{if(!user){onBack()}else if(view!=="home"){nav("home")}else{onBack()}}}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.sub} strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
         <Logo size={14} color={t.logo} />
-        <button style={{width:32,height:32,borderRadius:R,background:t.accent,border:"none",color:"#fff",fontWeight:800,fontSize:13}} onClick={()=>nav("profile")}>{user.name[0]}</button>
+        {user?<button style={{width:32,height:32,borderRadius:R,background:t.accent,border:"none",color:"#fff",fontWeight:800,fontSize:13}} onClick={()=>nav("profile")}>{user.name[0]}</button>:<div style={{width:32}}/>}
       </header>
       <main style={{paddingBottom:72}}>
-        {view==="home"&&<AppHome user={user} bookings={bookings} history={matchHistory} nav={nav} t={t} />}
+        {view==="home"&&user&&<AppHome user={user} bookings={bookings} history={matchHistory} nav={nav} t={t} />}
         {view==="reserve"&&<AppReserve onBook={(b)=>{setBookings(p=>[...p,{...b,id:Date.now()}]);notify("Mesa reservada");nav("home")}} t={t}/>}
         {view==="match"&&<AppMatch liveMatch={liveMatch} onStart={(m)=>{setLiveMatch(m);notify("Partido iniciado")}} t={t}/>}
         {view==="history"&&<AppHistory history={matchHistory} t={t}/>}
