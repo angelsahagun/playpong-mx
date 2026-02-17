@@ -89,7 +89,7 @@ function Landing({ onApp }) {
 
       {/* ═══ HERO ═══ */}
       <div style={{position:"relative",minHeight:640,display:"flex",alignItems:"center",overflow:"hidden",paddingTop:60}}>
-        <HeroBg />
+        <><img src="https://images.pexels.com/photos/35260822/pexels-photo-35260822.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover"}} /><div style={{position:"absolute",inset:0,background:"linear-gradient(135deg, rgba(10,26,16,0.85) 0%, rgba(19,56,39,0.8) 30%, rgba(26,74,53,0.75) 60%, rgba(12,32,24,0.85) 100%)"}} /></>
         <div style={{position:"relative",zIndex:2,maxWidth:1080,margin:"0 auto",padding:"80px 20px",width:"100%"}}>
           <p className="fu" style={{color:C.greenText,fontSize:12,fontWeight:700,letterSpacing:4,marginBottom:16}}>CONDESA, CDMX — PRÓXIMAMENTE</p>
           <h1 className="fu1" style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:76,lineHeight:.92,letterSpacing:3,color:"#fff",marginBottom:20,maxWidth:600}}>
@@ -99,11 +99,11 @@ function Landing({ onApp }) {
             Ping pong profesional en el corazón de la Condesa. Para los que juegan en serio y los que juegan por diversión. Mesas pro, marcador inteligente en cada mesa, coaches certificados, y una comunidad que no para de jugar.
           </p>
           <div className="fu3" style={{display:"flex",gap:12,flexWrap:"wrap"}}>
-            <button style={{padding:"14px 32px",background:C.green,border:`1px solid ${C.greenText}44`,borderRadius:R,color:"#fff",fontSize:15,fontWeight:700,fontFamily:"'Sora',sans-serif"}} onClick={onApp}>Reserva</button>
+            <button style={{padding:"16px 40px",background:"#fff",border:"none",borderRadius:R,color:C.green,fontSize:16,fontWeight:800,boxShadow:"0 4px 24px rgba(0,0,0,0.3)",fontFamily:"'Sora',sans-serif"}} onClick={onApp}>Reserva</button>
             
           </div>
           <div className="fu3" style={{display:"flex",gap:40,marginTop:52}}>
-            {[{n:"4",l:"Mesas pro"},{n:"24/7",l:"Reserva online"},{n:"3",l:"Coaches"},{n:"📍",l:"Condesa"}].map(s=><div key={s.l}><p style={{fontFamily:"'Orbitron',sans-serif",fontSize:28,fontWeight:900,color:"#fff"}}>{s.n}</p><p style={{color:"#ffffff55",fontSize:11,marginTop:2}}>{s.l}</p></div>)}
+            {[{n:"4",l:"Mesas pro"},{n:"3",l:"Coaches"},{n:"📍",l:"Condesa"}].map(s=><div key={s.l}><p style={{fontFamily:"'Orbitron',sans-serif",fontSize:28,fontWeight:900,color:"#fff"}}>{s.n}</p><p style={{color:"#ffffff55",fontSize:11,marginTop:2}}>{s.l}</p></div>)}
           </div>
         </div>
       </div>
