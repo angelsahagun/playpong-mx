@@ -28,6 +28,24 @@ export default function PlayPongSite() {
 function Logo({ size = 20, color = "#133827" }) {
   return (<div style={{ display:"flex",flexDirection:"column",alignItems:"center",lineHeight:1 }}><span style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:size,color,letterSpacing:4,lineHeight:1 }}>PLAY</span><div style={{ width:size*1.8,height:1.5,background:color,margin:"1px 0" }}/><span style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:size,color,letterSpacing:4,lineHeight:1 }}>PONG</span></div>);
 }
+function Icon({ name, size = 22, color = "#133827" }) {
+  const icons = {
+    table: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="12" y1="6" x2="12" y2="18"/><line x1="2" y1="12" x2="22" y2="12"/></svg>,
+    bulb: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>,
+    sofa: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H6v-2a2 2 0 0 0-4 0z"/><path d="M4 18v2M20 18v2"/></svg>,
+    bag: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>,
+    target: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>,
+    monitor: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>,
+    clock: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,
+    bolt: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+    users: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+    user: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+    trophy: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>,
+    chart: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+    calendar: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M8 2v4M16 2v4"/><rect x="2" y="4" width="20" height="18" rx="2"/><path d="M2 10h20"/></svg>,
+  };
+  return <div style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:size*2.2,height:size*2.2,borderRadius:"50%",background:color==="#133827"?"rgba(19,56,39,0.08)":"rgba(255,255,255,0.08)"}}>{icons[name]}</div>;
+}
 const Tag = ({children}) => <p style={{color:C.green,fontSize:12,fontWeight:700,letterSpacing:4,marginBottom:8}}>{children.toUpperCase()}</p>;
 const h2s = { fontFamily:"'Bebas Neue',sans-serif",fontSize:44,letterSpacing:2,lineHeight:1,color:C.text,marginBottom:12 };
 
@@ -136,11 +154,11 @@ function Landing({ onApp }) {
 
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:12}}>
             {[
-              {t:"Mesas Profesionales",d:"Mesas ITTF-approved con redes de competencia. Piso deportivo antideslizante.",i:"🏓"},
-              {t:"Iluminación Optimizada",d:"Luces LED calibradas para eliminar sombras y reflejos durante el juego.",i:"💡"},
-              {t:"Zona Lounge",d:"Espacio para descansar, ver partidos en las TVs, y socializar con otros jugadores.",i:"🛋️"},
-              {t:"Pro Shop",d:"Paletas, pelotas, grips y accesorios de las mejores marcas disponibles en sitio.",i:"🏪"},
-            ].map(f=><div key={f.t} style={{background:"#fff",borderRadius:R,padding:20,border:`1px solid ${C.border}`}}><span style={{fontSize:24}}>{f.i}</span><h3 style={{fontSize:15,fontWeight:700,marginTop:10,color:C.text}}>{f.t}</h3><p style={{color:C.sub,fontSize:12,lineHeight:1.5,marginTop:4}}>{f.d}</p></div>)}
+              {t:"Mesas Profesionales",d:"Mesas ITTF-approved con redes de competencia. Piso deportivo antideslizante.",i:"table"},
+              {t:"Iluminación Optimizada",d:"Luces LED calibradas para eliminar sombras y reflejos durante el juego.",i:"bulb"},
+              {t:"Zona Lounge",d:"Espacio para descansar, ver partidos en las TVs, y socializar con otros jugadores.",i:"sofa"},
+              {t:"Pro Shop",d:"Paletas, pelotas, grips y accesorios de las mejores marcas disponibles en sitio.",i:"bag"},
+            ].map(f=><div key={f.t} style={{background:"transparent",borderRadius:0,padding:"16px 8px"}}><Icon name={f.i} size={22} color="#133827"/><h3 style={{fontSize:15,fontWeight:700,marginTop:10,color:C.text}}>{f.t}</h3><p style={{color:C.sub,fontSize:12,lineHeight:1.5,marginTop:4}}>{f.d}</p></div>)}
           </div>
         </div>
       </section>
@@ -199,11 +217,11 @@ function Landing({ onApp }) {
           </div>
           <div style={{flex:1,minWidth:240,display:"flex",flexDirection:"column",gap:10}}>
             {[
-              {t:"Botones físicos",d:"Un botón arcade por lado. Táctil, satisfactorio, cero distracciones.",i:"🔴"},
-              {t:"TV en tiempo real",d:"Score, sets, servicio, deuce — todo visible para ambos jugadores.",i:"🖥️"},
-              {t:"Historial automático",d:"Cada partido se registra en tu perfil con scores completos set por set.",i:"📊"},
-              {t:"Cero fricción",d:"Creas el partido desde la app, luego solo juegas. La tecnología desaparece.",i:"⚡"},
-            ].map(f=><div key={f.t} style={{background:C.cream,borderRadius:R,padding:"12px 16px",border:`1px solid ${C.border}`,display:"flex",gap:10,alignItems:"flex-start"}}><span style={{fontSize:16,flexShrink:0}}>{f.i}</span><div><p style={{fontSize:13,fontWeight:700,color:C.text}}>{f.t}</p><p style={{color:C.sub,fontSize:11,marginTop:2,lineHeight:1.4}}>{f.d}</p></div></div>)}
+              {t:"Botones físicos",d:"Un botón arcade por lado. Táctil, satisfactorio, cero distracciones.",i:"target"},
+              {t:"TV en tiempo real",d:"Score, sets, servicio, deuce — todo visible para ambos jugadores.",i:"monitor"},
+              {t:"Historial automático",d:"Cada partido se registra en tu perfil con scores completos set por set.",i:"clock"},
+              {t:"Cero fricción",d:"Creas el partido desde la app, luego solo juegas. La tecnología desaparece.",i:"bolt"},
+            ].map(f=><div key={f.t} style={{background:"transparent",borderRadius:0,padding:"12px 0",display:"flex",gap:12,alignItems:"flex-start",borderBottom:"1px solid rgba(0,0,0,0.06)"}}><Icon name={f.i} size={16} color="#133827"/><div><p style={{fontSize:13,fontWeight:700,color:C.text}}>{f.t}</p><p style={{color:C.sub,fontSize:11,marginTop:2,lineHeight:1.4}}>{f.d}</p></div></div>)}
           </div>
         </div>
       </section>
@@ -235,11 +253,11 @@ function Landing({ onApp }) {
 
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12}}>
             {[
-              {t:"Lecciones Privadas",d:"1-on-1 con coach. Trabaja en tu técnica, estrategia, o lo que necesites.",p:"Desde $250/hr",i:"🎯"},
-              {t:"Clases Grupales",d:"4-8 personas por clase. Temas como topspin, defensa, y táctica de partido.",p:"Desde $120/clase",i:"👥"},
-              {t:"Programa Kids",d:"Clases divertidas para niños de 6-12 años. Aprenden jugando.",p:"Desde $120/clase",i:"🧒"},
-              {t:"Torneos Mensuales",d:"Competencias amistosas con rankings y premios. Todos los niveles.",p:"Incluido",i:"🏆"},
-            ].map(c=><div key={c.t} style={{background:"#ffffff0a",borderRadius:R,padding:20,border:"1px solid #ffffff12"}}><span style={{fontSize:24}}>{c.i}</span><h3 style={{fontSize:15,fontWeight:700,marginTop:10}}>{c.t}</h3><p style={{color:"#ffffff88",fontSize:12,lineHeight:1.5,marginTop:4,marginBottom:10}}>{c.d}</p><p style={{color:C.greenText,fontWeight:700,fontSize:13}}>{c.p}</p></div>)}
+              {t:"Lecciones Privadas",d:"1-on-1 con coach. Trabaja en tu técnica, estrategia, o lo que necesites.",p:"Desde $250/hr",i:"target"},
+              {t:"Clases Grupales",d:"4-8 personas por clase. Temas como topspin, defensa, y táctica de partido.",p:"Desde $120/clase",i:"users"},
+              {t:"Programa Kids",d:"Clases divertidas para niños de 6-12 años. Aprenden jugando.",p:"Desde $120/clase",i:"user"},
+              {t:"Torneos Mensuales",d:"Competencias amistosas con rankings y premios. Todos los niveles.",p:"Incluido",i:"trophy"},
+            ].map(c=><div key={c.t} style={{background:"transparent",borderRadius:0,padding:"20px 8px"}}><Icon name={c.i} size={22} color="#fff"/><h3 style={{fontSize:15,fontWeight:700,marginTop:10}}>{c.t}</h3><p style={{color:"#ffffff88",fontSize:12,lineHeight:1.5,marginTop:4,marginBottom:10}}>{c.d}</p><p style={{color:C.greenText,fontWeight:700,fontSize:13}}>{c.p}</p></div>)}
           </div>
         </div>
       </section>
@@ -262,10 +280,10 @@ function Landing({ onApp }) {
 
         <div style={{display:"flex",gap:12,flexWrap:"wrap",marginTop:20}}>
           {[
-            {n:"🏆",t:"Torneos Semanales",d:"Cada viernes. Singles y dobles. Todos los niveles con brackets automáticos."},
-            {n:"📊",t:"Rankings en Vivo",d:"Tu posición en el club basada en tus resultados. Sube de nivel y desbloquea logros."},
-            {n:"🎉",t:"Eventos Sociales",d:"Noches de ping pong + DJ, torneos temáticos, ligas corporativas, y más."},
-          ].map(f=><div key={f.t} style={{flex:1,minWidth:200,padding:24,background:C.cream,borderRadius:R,border:`1px solid ${C.border}`}}><span style={{fontSize:28}}>{f.n}</span><h3 style={{fontSize:15,fontWeight:700,marginTop:10,color:C.text}}>{f.t}</h3><p style={{color:C.sub,fontSize:12,lineHeight:1.5,marginTop:6}}>{f.d}</p></div>)}
+            {n:"trophy",t:"Torneos Semanales",d:"Cada viernes. Singles y dobles. Todos los niveles con brackets automáticos."},
+            {n:"chart",t:"Rankings en Vivo",d:"Tu posición en el club basada en tus resultados. Sube de nivel y desbloquea logros."},
+            {n:"calendar",t:"Eventos Sociales",d:"Noches de ping pong + DJ, torneos temáticos, ligas corporativas, y más."},
+          ].map(f=><div key={f.t} style={{flex:1,minWidth:200,padding:"20px 8px",background:"transparent",borderRadius:0}}><Icon name={f.n} size={22} color="#133827"/><h3 style={{fontSize:15,fontWeight:700,marginTop:10,color:C.text}}>{f.t}</h3><p style={{color:C.sub,fontSize:12,lineHeight:1.5,marginTop:6}}>{f.d}</p></div>)}
         </div>
       </section>
 
