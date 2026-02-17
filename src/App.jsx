@@ -434,7 +434,7 @@ function AppReserve({ onBook, t }) {
       <div style={{display:"flex",justifyContent:"space-between",padding:"8px 0"}}><span style={{color:t.sub,fontSize:13}}>Email</span><span style={{color:t.text,fontWeight:600,fontSize:13}}>{form.email}</span></div>
     </div>
     <button style={ab(t)} onClick={()=>onBook({type:"table",title:"Mesa reservada",date,time,duration:dur,price:(dur/60)*150})}>Pagar y Reservar</button>
-    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>setStep("account")}>← Atrás</button>
+    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>setStep("payment")}>← Atrás</button>
   </div>);
 
   // Step 2: Account info
@@ -447,17 +447,30 @@ function AppReserve({ onBook, t }) {
     <input style={ai(t)} placeholder="+52 55 1234 5678" type="tel" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/>
     <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>CONTRASEÑA</p>
     <input style={ai(t)} placeholder="Crea una contraseña" type="password" value={form.pass} onChange={e=>setForm({...form,pass:e.target.value})}/>
-    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>TARJETA</p>
-    <input style={ai(t)} placeholder="4242 4242 4242 4242" value={form.card} onChange={e=>setForm({...form,card:e.target.value})}/>
-    <div style={{display:"flex",gap:8}}>
-      <input style={{...ai(t),flex:1}} placeholder="MM/AA" value={form.expiry} onChange={e=>setForm({...form,expiry:e.target.value})}/>
-      <input style={{...ai(t),flex:1}} placeholder="CVC" value={form.cvc} onChange={e=>setForm({...form,cvc:e.target.value})}/>
-    </div>
-    <button style={{...ab(t),opacity:form.email&&form.phone&&form.pass?1:.4}} disabled={!form.email||!form.phone||!form.pass} onClick={()=>setStep("confirm")}>Continuar</button>
+    <button style={{...ab(t),opacity:form.email&&form.phone&&form.pass?1:.4}} disabled={!form.email||!form.phone||!form.pass} onClick={()=>setStep("payment")}>Continuar</button>
     <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>{setTime(null);setStep("time")}}>← Atrás</button>
   </div>);
 
   // Step 1b: Duration + Time
+  
+  if(step==="payment") return React.createElement("div",{style:{...ac(t),textAlign:"left"}},
+    React.createElement("h2",{style:{color:t.text,fontSize:22,fontWeight:700,marginBottom:4}},"M\u00e9todo de pago"),
+    React.createElement("p",{style:{color:t.sub,fontSize:13,marginBottom:16}},"Agrega tu tarjeta para completar la reserva"),
+    React.createElement("p",{style:{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}},"TARJETA"),
+    React.createElement("input",{style:ai(t),placeholder:"4242 4242 4242 4242",value:form.card,onChange:e=>setForm({...form,card:e.target.value})}),
+    React.createElement("div",{style:{display:"flex",gap:12,marginTop:4}},
+      React.createElement("div",{style:{flex:1}},
+        React.createElement("p",{style:{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}},"VENCIMIENTO"),
+        React.createElement("input",{style:ai(t),placeholder:"MM/AA",value:form.expiry,onChange:e=>setForm({...form,expiry:e.target.value})})
+      ),
+      React.createElement("div",{style:{flex:1}},
+        React.createElement("p",{style:{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}},"CVC"),
+        React.createElement("input",{style:ai(t),placeholder:"CVC",value:form.cvc,onChange:e=>setForm({...form,cvc:e.target.value})})
+      )
+    ),
+    React.createElement("button",{style:{width:"100%",padding:"14px",background:t.accent,color:"#fff",border:"none",borderRadius:R,fontWeight:700,fontSize:15,marginTop:18,cursor:"pointer",fontFamily:"'Sora',sans-serif"},onClick:()=>setStep("confirm")},"Continuar"),
+    React.createElement("button",{style:{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"},onClick:()=>setStep("account")},"\u2190 Atr\u00e1s")
+  );
   if(step==="time") return(<div style={aw}>
     <h2 style={at(t)}>Reservar Mesa</h2>
     <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>DURACIÓN</p>
