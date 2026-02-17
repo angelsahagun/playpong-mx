@@ -21,7 +21,7 @@ const booked = new Set(["10:00","16:00"]);
 export default function PlayPongSite() {
   const [showApp, setShowApp] = useState(false);
   useEffect(() => { if (!document.querySelector(`link[href="${FONT}"]`)) { const l = document.createElement("link"); l.rel = "stylesheet"; l.href = FONT; document.head.appendChild(l); } }, []);
-  if (showApp) return <PlayPongApp onBack={() => setShowApp(false)} />;
+  if (showApp) return <PlayPongApp onBack={() => setShowApp(false)} startView="reserve" />;
   return <Landing onApp={() => setShowApp(true)} />;
 }
 
@@ -265,7 +265,7 @@ function Landing({ onApp }) {
       {/* ═══ COMUNIDAD ═══ */}
       <section id="comunidad">
         <Tag>Comunidad</Tag>
-        <h2 style={h2s}>Más que un club</h2>
+        <h2 style={h2s}>Tu nueva comunidad</h2>
         <p style={{color:C.sub,fontSize:15,lineHeight:1.7,maxWidth:580,marginBottom:32}}>
           PlayPong es una comunidad de jugadores. Torneos semanales, rankings en vivo, eventos sociales, y un espacio donde siempre hay alguien dispuesto a jugar un partido. Ven solo y te vas con amigos.
         </p>
@@ -336,9 +336,9 @@ function Landing({ onApp }) {
   );
 }
 
-function PlayPongApp({ onBack }) {
+function PlayPongApp({ onBack, startView = "home" }) {
   const [user, setUser] = useState(null);
-  const [view, setView] = useState("home");
+  const [view, setView] = useState(startView);
   const [mode, setMode] = useState("dark");
   const [notif, setNotif] = useState(null);
   const [bookings, setBookings] = useState([]);
@@ -352,7 +352,7 @@ function PlayPongApp({ onBack }) {
   const notify = (msg) => { setNotif(msg); setTimeout(() => setNotif(null), 2500); };
   const nav = (v) => setView(v);
 
-  if (!user) {
+  if (!user && view !== "reserve") {
     return (
       <div style={{ fontFamily:"'Sora',sans-serif", background:t.bg, minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", padding:20 }}>
         <div style={{ width:"100%", maxWidth:380 }}>
