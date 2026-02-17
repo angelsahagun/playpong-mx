@@ -79,7 +79,7 @@ function Landing({ onApp }) {
       {/* NAV */}
       <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,background:C.white+"ee",backdropFilter:"blur(12px)",borderBottom:`1px solid ${C.border}`}}>
         <div style={{maxWidth:1080,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 20px"}}>
-          <Logo size={16} color={C.green}/>
+          <a href="#" onClick={(e)=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})}} style={{cursor:'pointer'}}><Logo size={16} color={C.green}/></a>
           <div style={{display:"flex",gap:24,alignItems:"center"}}>
             {["Espacio","Tecnología","Clases","Comunidad","Precios"].map(s=><a key={s} href={`#${s.toLowerCase()}`} style={{color:C.sub,fontSize:13,fontWeight:500}}>{s}</a>)}
             <button style={{padding:"8px 20px",background:C.green,border:"none",borderRadius:R,color:"#fff",fontSize:13,fontWeight:700,fontFamily:"'Sora',sans-serif"}} onClick={onApp}>Reservar</button>
@@ -93,14 +93,14 @@ function Landing({ onApp }) {
         <div style={{position:"relative",zIndex:2,maxWidth:1080,margin:"0 auto",padding:"80px 20px",width:"100%"}}>
           <p className="fu" style={{color:C.greenText,fontSize:12,fontWeight:700,letterSpacing:4,marginBottom:16}}>CONDESA, CDMX — PRÓXIMAMENTE</p>
           <h1 className="fu1" style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:76,lineHeight:.92,letterSpacing:3,color:"#fff",marginBottom:20,maxWidth:600}}>
-            EL CLUB<br/>QUE<br/><span style={{color:C.greenText}}>FALTABA</span>
+            JUEGA<br/>PING PONG<br/><span style={{color:C.greenText}}>COMO NUNCA ANTES.</span>
           </h1>
           <p className="fu2" style={{color:"#ffffffaa",fontSize:16,lineHeight:1.7,maxWidth:480,marginBottom:36}}>
             Ping pong profesional en el corazón de la Condesa. Para los que juegan en serio y los que juegan por diversión. Mesas pro, marcador inteligente en cada mesa, coaches certificados, y una comunidad que no para de jugar.
           </p>
           <div className="fu3" style={{display:"flex",gap:12,flexWrap:"wrap"}}>
-            <button style={{padding:"14px 32px",background:C.green,border:`1px solid ${C.greenText}44`,borderRadius:R,color:"#fff",fontSize:15,fontWeight:700,fontFamily:"'Sora',sans-serif"}} onClick={onApp}>Reservar Mesa →</button>
-            <a href="#espacio" style={{padding:"14px 32px",background:"#ffffff10",border:"1px solid #ffffff22",borderRadius:R,color:"#fff",fontSize:15,fontWeight:600,fontFamily:"'Sora',sans-serif",display:"inline-block"}}>Conocer más</a>
+            <button style={{padding:"14px 32px",background:C.green,border:`1px solid ${C.greenText}44`,borderRadius:R,color:"#fff",fontSize:15,fontWeight:700,fontFamily:"'Sora',sans-serif"}} onClick={onApp}>Reserva</button>
+            
           </div>
           <div className="fu3" style={{display:"flex",gap:40,marginTop:52}}>
             {[{n:"4",l:"Mesas pro"},{n:"24/7",l:"Reserva online"},{n:"3",l:"Coaches"},{n:"📍",l:"Condesa"}].map(s=><div key={s.l}><p style={{fontFamily:"'Orbitron',sans-serif",fontSize:28,fontWeight:900,color:"#fff"}}>{s.n}</p><p style={{color:"#ffffff55",fontSize:11,marginTop:2}}>{s.l}</p></div>)}
