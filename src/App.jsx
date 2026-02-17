@@ -418,16 +418,68 @@ function AppHome({ user, bookings, history, nav, t }) {
 }
 
 function AppReserve({ onBook, t }) {
-  const [date,setDate]=useState(""); const [time,setTime]=useState(null); const [dur,setDur]=useState(60);
+  const [date,setDate]=useState("");
+  const [time,setTime]=useState(null);
+  const [dur,setDur]=useState(60);
+  const [step,setStep]=useState("date");
+  const [form,setForm]=useState({email:"",phone:"",pass:"",card:"",expiry:"",cvc:""});
   const dates=Array.from({length:7},(_,i)=>{const d=new Date("2026-02-16");d.setDate(d.getDate()+i);return d.toISOString().split("T")[0]});
   const days=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
-  if(date&&time) return(<div style={aw}><h2 style={at(t)}>Confirmar</h2><div style={{...ac(t),textAlign:"left"}}>{[["Fecha",date],["Hora",time],["Duración",`${dur} min`],["Total",`$${(dur/60)*150}`]].map(([k,v])=><div key={k} style={{display:"flex",justifyContent:"space-between",padding:"8px 0"}}><span style={{color:t.sub}}>{k}</span><span style={{color:t.text,fontWeight:600}}>{v}</span></div>)}</div><button style={ab(t)} onClick={()=>onBook({type:"table",title:"Mesa reservada",date,time,duration:dur,price:(dur/60)*150})}>Confirmar y Pagar</button><button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>setTime(null)}>← Atrás</button></div>);
-  return (<div style={aw}><h2 style={at(t)}>Reservar Mesa</h2>
-    {!date?<><p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>FECHA</p><div style={{display:"flex",gap:6,overflowX:"auto"}}>{dates.map(d=>{const o=new Date(d+"T12:00:00");return <button key={d} style={{padding:"10px 14px",background:t.card,border:`1px solid ${t.border}`,borderRadius:R,display:"flex",flexDirection:"column",alignItems:"center",gap:2,minWidth:52,fontFamily:"'Sora',sans-serif"}} onClick={()=>setDate(d)}><span style={{fontSize:10,color:t.sub}}>{days[o.getDay()]}</span><span style={{fontSize:20,fontWeight:700,color:t.text}}>{o.getDate()}</span></button>})}</div></>
-    :<><p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>DURACIÓN</p><div style={{display:"flex",gap:6,marginBottom:16}}>{[30,60,90].map(d=><button key={d} style={{flex:1,padding:10,background:dur===d?t.accent:t.card,border:`1px solid ${dur===d?t.accent:t.border}`,borderRadius:R,color:dur===d?"#fff":t.text,fontSize:13,fontWeight:600,fontFamily:"'Sora',sans-serif"}} onClick={()=>setDur(d)}>{d} min</button>)}</div><p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>HORARIO</p><div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6}}>{TIMES.map(tm=>{const bk=booked.has(tm);return <button key={tm} disabled={bk} style={{padding:"12px 4px",background:bk?t.surface:t.card,border:`1px solid ${bk?t.surface:t.border}`,borderRadius:R,color:bk?t.muted:t.text,fontSize:13,fontWeight:600,textDecoration:bk?"line-through":"none",fontFamily:"'Sora',sans-serif"}} onClick={()=>{if(!bk)setTime(tm)}}>{tm}</button>})}</div><button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>setDate("")}>← Atrás</button></>}
+
+  // Step 3: Confirm & Pay
+  if(step==="confirm") return(<div style={aw}>
+    <h2 style={at(t)}>Confirmar reserva</h2>
+    <div style={{...ac(t),textAlign:"left"}}>
+      {[["Fecha",date],["Hora",time],["Duración",dur+" min"],["Total","$"+(dur/60)*150+" MXN"]].map(([k,v])=><div key={k} style={{display:"flex",justifyContent:"space-between",padding:"8px 0",borderBottom:"1px solid "+t.border}}><span style={{color:t.sub,fontSize:13}}>{k}</span><span style={{color:t.text,fontWeight:600,fontSize:13}}>{v}</span></div>)}
+      <div style={{display:"flex",justifyContent:"space-between",padding:"8px 0"}}><span style={{color:t.sub,fontSize:13}}>Email</span><span style={{color:t.text,fontWeight:600,fontSize:13}}>{form.email}</span></div>
+    </div>
+    <button style={ab(t)} onClick={()=>onBook({type:"table",title:"Mesa reservada",date,time,duration:dur,price:(dur/60)*150})}>Pagar y Reservar</button>
+    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>setStep("account")}>← Atrás</button>
+  </div>);
+
+  // Step 2: Account info
+  if(step==="account") return(<div style={aw}>
+    <h2 style={at(t)}>Tu información</h2>
+    <p style={{color:t.sub,fontSize:13,marginBottom:16}}>Para confirmar tu reserva del {date} a las {time}</p>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>EMAIL</p>
+    <input style={ai(t)} placeholder="tu@email.com" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>TELÉFONO</p>
+    <input style={ai(t)} placeholder="+52 55 1234 5678" type="tel" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>CONTRASEÑA</p>
+    <input style={ai(t)} placeholder="Crea una contraseña" type="password" value={form.pass} onChange={e=>setForm({...form,pass:e.target.value})}/>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>TARJETA</p>
+    <input style={ai(t)} placeholder="4242 4242 4242 4242" value={form.card} onChange={e=>setForm({...form,card:e.target.value})}/>
+    <div style={{display:"flex",gap:8}}>
+      <input style={{...ai(t),flex:1}} placeholder="MM/AA" value={form.expiry} onChange={e=>setForm({...form,expiry:e.target.value})}/>
+      <input style={{...ai(t),flex:1}} placeholder="CVC" value={form.cvc} onChange={e=>setForm({...form,cvc:e.target.value})}/>
+    </div>
+    <button style={{...ab(t),opacity:form.email&&form.phone&&form.pass?1:.4}} disabled={!form.email||!form.phone||!form.pass} onClick={()=>setStep("confirm")}>Continuar</button>
+    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>{setTime(null);setStep("time")}}>← Atrás</button>
+  </div>);
+
+  // Step 1b: Duration + Time
+  if(step==="time") return(<div style={aw}>
+    <h2 style={at(t)}>Reservar Mesa</h2>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>DURACIÓN</p>
+    <div style={{display:"flex",gap:6,marginBottom:16}}>
+      {[30,60,90].map(d=><button key={d} style={{flex:1,padding:10,background:dur===d?t.accent:t.card,border:"1px solid "+(dur===d?t.accent:t.border),borderRadius:R,color:dur===d?"#fff":t.text,fontSize:13,fontWeight:600,fontFamily:"'Sora',sans-serif"}} onClick={()=>setDur(d)}>{d} min</button>)}
+    </div>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>HORARIO</p>
+    <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6}}>
+      {TIMES.map(tm=>{const bk=booked.has(tm);return <button key={tm} disabled={bk} style={{padding:"12px 4px",background:bk?t.surface:t.card,border:"1px solid "+(bk?t.surface:t.border),borderRadius:R,color:bk?t.muted:t.text,fontSize:13,fontWeight:600,textDecoration:bk?"line-through":"none",fontFamily:"'Sora',sans-serif"}} onClick={()=>{if(!bk){setTime(tm);setStep("account")}}}>{tm}</button>})}
+    </div>
+    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>{setDate("");setStep("date")}}>← Atrás</button>
+  </div>);
+
+  // Step 1a: Date (default)
+  return (<div style={aw}>
+    <h2 style={at(t)}>Reservar Mesa</h2>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>FECHA</p>
+    <div style={{display:"flex",gap:6,overflowX:"auto"}}>
+      {dates.map(d=>{const o=new Date(d+"T12:00:00");return <button key={d} style={{padding:"10px 14px",background:t.card,border:"1px solid "+t.border,borderRadius:R,display:"flex",flexDirection:"column",alignItems:"center",gap:2,minWidth:52,fontFamily:"'Sora',sans-serif"}} onClick={()=>{setDate(d);setStep("time")}}><span style={{fontSize:10,color:t.sub}}>{days[o.getDay()]}</span><span style={{fontSize:20,fontWeight:700,color:t.text}}>{o.getDate()}</span></button>})}
+    </div>
   </div>);
 }
-
 function AppMatch({ liveMatch, onStart, t }) {
   const [opp,setOpp]=useState(""); const [stw,setStw]=useState(3);
   return (<div style={aw}><h2 style={at(t)}>Iniciar Partido</h2>
