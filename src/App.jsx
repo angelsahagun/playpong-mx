@@ -426,6 +426,8 @@ function AppReserve({ onBook, t }) {
   const [form,setForm]=useState({email:"",phone:"",pass:"",card:"",expiry:"",cvc:""});
   const today=new Date();today.setHours(0,0,0,0);const weekStart=new Date(today);weekStart.setDate(today.getDate()+(weekOffset*7));const dates=Array.from({length:7},(_,i)=>{const d=new Date(weekStart);d.setDate(weekStart.getDate()+i);return d.toISOString().split("T")[0]});const maxDate=new Date(today);maxDate.setDate(today.getDate()+30);const canGoBack=weekOffset>0;const canGoFwd=new Date(weekStart.getTime()+7*86400000)<=maxDate;
   const days=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+  const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  const firstDate=new Date(dates[0]+"T12:00:00");const lastDate=new Date(dates[dates.length-1]+"T12:00:00");const monthLabel=firstDate.getMonth()===lastDate.getMonth()?months[firstDate.getMonth()]+" "+firstDate.getFullYear():months[firstDate.getMonth()]+" – "+months[lastDate.getMonth()]+" "+lastDate.getFullYear();
 
   // Step 3: Confirm & Pay
   if(step==="confirm") return(<div style={aw}>
@@ -484,7 +486,7 @@ function AppReserve({ onBook, t }) {
   // Step 1a: Date (default)
   return (<div style={aw}>
     <h2 style={at(t)}>Reservar Mesa</h2>
-    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}><button onClick={()=>setWeekOffset(o=>o-1)} disabled={!canGoBack} style={{background:"none",border:"none",color:canGoBack?t.text:"#333",fontSize:18,cursor:canGoBack?"pointer":"default",padding:4}}>‹</button><p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,margin:0}}>FECHA</p><button onClick={()=>setWeekOffset(o=>o+1)} disabled={!canGoFwd} style={{background:"none",border:"none",color:canGoFwd?t.text:"#333",fontSize:18,cursor:canGoFwd?"pointer":"default",padding:4}}>›</button></div>
+    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}><button onClick={()=>setWeekOffset(o=>o-1)} disabled={!canGoBack} style={{background:"none",border:"none",color:canGoBack?t.text:"#333",fontSize:18,cursor:canGoBack?"pointer":"default",padding:4}}>‹</button><p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,margin:0}}>{monthLabel}</p><button onClick={()=>setWeekOffset(o=>o+1)} disabled={!canGoFwd} style={{background:"none",border:"none",color:canGoFwd?t.text:"#333",fontSize:18,cursor:canGoFwd?"pointer":"default",padding:4}}>›</button></div>
     <div style={{display:"flex",gap:6,overflowX:"auto"}}>
       {dates.map(d=>{const o=new Date(d+"T12:00:00");return <button key={d} style={{padding:"10px 14px",background:t.card,border:"1px solid "+t.border,borderRadius:R,display:"flex",flexDirection:"column",alignItems:"center",gap:2,minWidth:52,fontFamily:"'Sora',sans-serif"}} onClick={()=>{setDate(d);setStep("time")}}><span style={{fontSize:10,color:t.sub}}>{days[o.getDay()]}</span><span style={{fontSize:20,fontWeight:700,color:t.text}}>{o.getDate()}</span></button>})}
     </div>
