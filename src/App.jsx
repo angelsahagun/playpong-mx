@@ -434,7 +434,6 @@ function AppReserve({ onBook, t }) {
       <div style={{display:"flex",justifyContent:"space-between",padding:"8px 0"}}><span style={{color:t.sub,fontSize:13}}>Email</span><span style={{color:t.text,fontWeight:600,fontSize:13}}>{form.email}</span></div>
     </div>
     <button style={ab(t)} onClick={()=>onBook({type:"table",title:"Mesa reservada",date,time,duration:dur,price:(dur/60)*150})}>Pagar y Reservar</button>
-    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>setStep("payment")}>← Atrás</button>
   </div>);
 
   // Step 2: Account info
@@ -443,12 +442,11 @@ function AppReserve({ onBook, t }) {
     <p style={{color:t.sub,fontSize:13,marginBottom:16}}>Para confirmar tu reserva del {date} a las {time}</p>
     <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>EMAIL</p>
     <input style={ai(t)} placeholder="tu@email.com" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/>
-    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>TELÉFONO</p>
-    <input style={ai(t)} placeholder="+52 55 1234 5678" type="tel" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/>
     <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>CONTRASEÑA</p>
     <input style={ai(t)} placeholder="Crea una contraseña" type="password" value={form.pass} onChange={e=>setForm({...form,pass:e.target.value})}/>
+    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:6}}>TELÉFONO</p>
+    <input style={ai(t)} placeholder="+52 55 1234 5678" type="tel" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/>
     <button style={{...ab(t),opacity:form.email&&form.phone&&form.pass?1:.4}} disabled={!form.email||!form.phone||!form.pass} onClick={()=>setStep("payment")}>Continuar</button>
-    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>{setTime(null);setStep("time")}}>← Atrás</button>
   </div>);
 
   // Step 1b: Duration + Time
@@ -469,7 +467,6 @@ function AppReserve({ onBook, t }) {
       )
     ),
     React.createElement("button",{style:{width:"100%",padding:"14px",background:t.accent,color:"#fff",border:"none",borderRadius:R,fontWeight:700,fontSize:15,marginTop:18,cursor:"pointer",fontFamily:"'Sora',sans-serif"},onClick:()=>setStep("confirm")},"Continuar"),
-    React.createElement("button",{style:{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"},onClick:()=>setStep("account")},"\u2190 Atr\u00e1s")
   );
   if(step==="time") return(<div style={aw}>
     <h2 style={at(t)}>Reservar Mesa</h2>
@@ -481,7 +478,6 @@ function AppReserve({ onBook, t }) {
     <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6}}>
       {TIMES.map(tm=>{const bk=booked.has(tm);return <button key={tm} disabled={bk} style={{padding:"12px 4px",background:bk?t.surface:t.card,border:"1px solid "+(bk?t.surface:t.border),borderRadius:R,color:bk?t.muted:t.text,fontSize:13,fontWeight:600,textDecoration:bk?"line-through":"none",fontFamily:"'Sora',sans-serif"}} onClick={()=>{if(!bk){setTime(tm);setStep("account")}}}>{tm}</button>})}
     </div>
-    <button style={{background:"none",border:"none",color:t.sub,padding:"8px 0",fontSize:13,display:"block",margin:"8px auto",cursor:"pointer",fontFamily:"'Sora',sans-serif"}} onClick={()=>{setDate("");setStep("date")}}>← Atrás</button>
   </div>);
 
   // Step 1a: Date (default)
