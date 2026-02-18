@@ -525,5 +525,5 @@ function AppProfile({ user, history, mode, setMode, nav, onLogout, t }) {
 const aw = { padding: "16px 18px 20px" };
 const at = (t) => ({ fontFamily:"'Bebas Neue',sans-serif", fontSize:28, color:t.text, letterSpacing:2, marginBottom:4 });
 const ac = (t) => ({ background:t.card, borderRadius:R, padding:"16px 18px", border:`1px solid ${t.border}`, marginBottom:8, fontFamily:"'Sora',sans-serif" });
-const ai = (t) => ({ width:"100%", padding:"13px 16px", background:t.inputBg, border:`1px solid ${t.border}`, borderRadius:R, color:t.text, fontSize:14, marginBottom:10, fontFamily:"'Sora',sans-serif" });
+const ai = (t) => ({ width:"100%", boxSizing:"border-box", padding:"13px 16px", background:t.inputBg, border:`1px solid ${t.border}`, borderRadius:R, color:t.text, fontSize:14, marginBottom:10, fontFamily:"'Sora',sans-serif" });
 const ab = (t) => ({ width:"100%", padding:"13px 16px", background:t.accent, border:"1px solid transparent", borderRadius:R, color:"#fff", fontSize:14, fontWeight:700, fontFamily:"'Sora',sans-serif" });
