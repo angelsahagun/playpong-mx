@@ -422,8 +422,9 @@ function AppReserve({ onBook, t }) {
   const [time,setTime]=useState(null);
   const [dur,setDur]=useState(60);
   const [step,setStep]=useState("date");
+  const [weekOffset,setWeekOffset]=useState(0);
   const [form,setForm]=useState({email:"",phone:"",pass:"",card:"",expiry:"",cvc:""});
-  const dates=Array.from({length:7},(_,i)=>{const d=new Date("2026-02-16");d.setDate(d.getDate()+i);return d.toISOString().split("T")[0]});
+  const today=new Date();today.setHours(0,0,0,0);const weekStart=new Date(today);weekStart.setDate(today.getDate()+(weekOffset*7));const dates=Array.from({length:7},(_,i)=>{const d=new Date(weekStart);d.setDate(weekStart.getDate()+i);return d.toISOString().split("T")[0]});const maxDate=new Date(today);maxDate.setDate(today.getDate()+30);const canGoBack=weekOffset>0;const canGoFwd=new Date(weekStart.getTime()+7*86400000)<=maxDate;
   const days=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
 
   // Step 3: Confirm & Pay
@@ -483,7 +484,7 @@ function AppReserve({ onBook, t }) {
   // Step 1a: Date (default)
   return (<div style={aw}>
     <h2 style={at(t)}>Reservar Mesa</h2>
-    <p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,marginBottom:8}}>FECHA</p>
+    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}><button onClick={()=>setWeekOffset(o=>o-1)} disabled={!canGoBack} style={{background:"none",border:"none",color:canGoBack?t.text:"#333",fontSize:18,cursor:canGoBack?"pointer":"default",padding:4}}>‹</button><p style={{color:t.sub,fontSize:11,fontWeight:700,letterSpacing:1.5,margin:0}}>FECHA</p><button onClick={()=>setWeekOffset(o=>o+1)} disabled={!canGoFwd} style={{background:"none",border:"none",color:canGoFwd?t.text:"#333",fontSize:18,cursor:canGoFwd?"pointer":"default",padding:4}}>›</button></div>
     <div style={{display:"flex",gap:6,overflowX:"auto"}}>
       {dates.map(d=>{const o=new Date(d+"T12:00:00");return <button key={d} style={{padding:"10px 14px",background:t.card,border:"1px solid "+t.border,borderRadius:R,display:"flex",flexDirection:"column",alignItems:"center",gap:2,minWidth:52,fontFamily:"'Sora',sans-serif"}} onClick={()=>{setDate(d);setStep("time")}}><span style={{fontSize:10,color:t.sub}}>{days[o.getDay()]}</span><span style={{fontSize:20,fontWeight:700,color:t.text}}>{o.getDate()}</span></button>})}
     </div>
